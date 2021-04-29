@@ -4,9 +4,10 @@ import './index.css';
 import App from './App';
 import FirebaseContext from './context/firebase';
 import firebase from './lib/firebase';
+import { auth } from './lib/firebase';
 
 ReactDOM.render(
-  <FirebaseContext.Provider value={firebase}>
+  <FirebaseContext.Provider value={{firebase, auth}}>
     <App />
   </FirebaseContext.Provider>,
   document.getElementById('root')
