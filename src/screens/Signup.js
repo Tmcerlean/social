@@ -33,38 +33,43 @@ const Signup = () => {
         // Check if username already exists
         const usernameExists = await checkUsernameDuplicate(username);
 
-        console.log("Here", usernameExists)
-
         if (usernameExists) {
-            console.log("Duplicate user");
-            console.log(usernameExists)
+            // Duplicate
+            
         } else {
-            console.log("Creating User");
+            // Create user in Firestore
+            try {
+
+                // Create auth user
+                const newUser = await firebase.auth().createUserWithEmailAndPassword(email, password)
+                
+                await newUser.user.updateProfile({
+                    displayName: username
+                });
+
+                const newUserData = {
+                    id: newUser.user.uid,
+                    username: username.toLowerCase(),
+                    name: name,
+                    email: email.toLowerCase(),
+                    following: [],
+                    followers: [],
+                };
+
+                await firebase.firestore().collection('users').add(newUserData).then(() => {
+                    console.log("Successfully added new user!");
+                })
+
+                history.push(ROUTES.HOME);
+
+            } catch (error) {
+                setEmail('');
+                setName('');
+                setUsername('');
+                setPassword('');
+                setError(error);
+            };
         }
-
-
-        // auth.signInWithEmailAndPassword(email, password)
-        // .then((userCredential) => {
-        //   // Signed in
-        //   var user = userCredential.user;
-        //   console.log(user);
-        //   history.push(ROUTES.DASHBOARD);
-        // })
-        // .catch((error) => {
-        //   var errorMessage = error.message;
-        //   setError(errorMessage);
-        // });
-
-        // firebase.auth().createUserWithEmailAndPassword(email, password)
-        // .then((userCredential) => {
-        //     // Signed in 
-        //     var user = userCredential.user;
-        // })
-        // .catch((error) => {
-        //     var errorCode = error.code;
-        //     var errorMessage = error.message;
-        //     // ..
-        // });
     }
 
     return (

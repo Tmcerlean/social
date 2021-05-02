@@ -29,7 +29,7 @@ const Login = () => {
           // Signed in
           var user = userCredential.user;
           console.log(user);
-          history.push(ROUTES.DASHBOARD);
+          history.push(ROUTES.HOME);
         })
         .catch((error) => {
           var errorMessage = error.message;
