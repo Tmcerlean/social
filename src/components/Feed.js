@@ -2,7 +2,7 @@
 const Feed = () => {
 
     return (
-        <div>
+        <div className="container col-span-2">
             Feed
         </div>
     )

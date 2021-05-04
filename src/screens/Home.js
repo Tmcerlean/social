@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import Header from '../components/Header';
-import Sidebar from '../components/Sidebar';
+import Sidebar from '../components/sidebar/index';
 import Feed from '../components/Feed';
 
 const Home = () => {
@@ -15,8 +15,8 @@ const Home = () => {
                 <Header />
             </div>
             <div className="grid grid-cols-3 gap-4 justify-between mx-auto max-w-screen-lg">
-                <Sidebar />
                 <Feed />
+                <Sidebar />
             </div>
         </>
     )

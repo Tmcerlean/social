@@ -21,5 +21,39 @@ const getUserByUserId = async (id) => {
     return user;
 }
 
-export { checkUsernameDuplicate, getUserByUserId };
+const getSuggestedProfiles = async (id, following) => {
+    const result = await firebase.firestore().collection("users").limit(10).get();
+
+        return result.docs.map((user) => ({
+        ...user.data(), docId: user.id
+    })).filter((profile) => {
+        console.log(profile.id);
+        console.log(following)
+        return profile.id !== id && !following.includes(profile.id)
+    });
+}
+
+const updateLoggedInUsersFollowing = async (loggedInUserDocId, profileId, isFollowingProfile) => {
+
+    // Add the profileId to the following array of user with id
+
+    return firebase.firestore().collection("users").doc(loggedInUserDocId).update({
+        following: isFollowingProfile
+            ? firebase.firestore.FieldValue.arrayRemove(profileId)
+            : firebase.firestore.FieldValue.arrayUnion(profileId)
+    });
+}
+
+const updateTargetUserFollowers = async (profileDocId, loggedInUserDocId, isFollowingProfile) => {
+
+    // Add the profileId to the following array of user with id
+
+    return firebase.firestore().collection("users").doc(profileDocId).update({
+        followers: isFollowingProfile
+            ? firebase.firestore.FieldValue.arrayRemove(loggedInUserDocId)
+            : firebase.firestore.FieldValue.arrayUnion(loggedInUserDocId)
+    });
+}
+
+export { checkUsernameDuplicate, getUserByUserId, getSuggestedProfiles, updateLoggedInUsersFollowing, updateTargetUserFollowers };
 
