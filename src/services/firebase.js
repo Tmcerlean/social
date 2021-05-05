@@ -55,5 +55,30 @@ const updateTargetUserFollowers = async (profileDocId, loggedInUserDocId, isFoll
     });
 }
 
-export { checkUsernameDuplicate, getUserByUserId, getSuggestedProfiles, updateLoggedInUsersFollowing, updateTargetUserFollowers };
+const getUsersPhotos = async (uid, following) => {
+    const result = await firebase.firestore().collection("photos").where("userId", "in", following).get();
+
+    const userFollowedPhotos = result.docs.map((photo) => ({
+        ...photo.data(),
+        docId: photo.id
+    }));
+
+    console.log(userFollowedPhotos);
+
+    const photosWithUserDetails = await Promise.all(
+        userFollowedPhotos.map(async (photo) => {
+            let userLikedPhoto = false;
+            if (photo.likes.includes(uid)) {
+                userLikedPhoto = true;
+            }
+            const user = await getUserByUserId(photo.userId);
+            const { username } = user[0];
+            return { username, ...photo, userLikedPhoto };
+        })
+    )
+
+    return photosWithUserDetails;
+}
+
+export { checkUsernameDuplicate, getUserByUserId, getSuggestedProfiles, updateLoggedInUsersFollowing, updateTargetUserFollowers, getUsersPhotos };
 

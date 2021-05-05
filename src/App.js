@@ -1,7 +1,6 @@
 import { lazy, Suspense, useContext } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import * as ROUTES from './constants/routes';
-import FirebaseContext from './context/firebase';
 import UserContext from './context/user';
 import useAuthListener from './hooks/useAuthListener';
 
@@ -12,8 +11,7 @@ const Signup = lazy(() => import('./screens/Signup'));
 
 const App = () => {
 
-  const { firebase, auth } = useContext(FirebaseContext);
-  const user = useAuthListener(UserContext);
+  const user = useAuthListener();
 
   return (
     <UserContext.Provider value={user}>
