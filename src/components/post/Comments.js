@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { formatDistance } from 'date-fns';
 import { Link } from 'react-router-dom'; 
+import AddComment from './AddComment';
 
 const Comments = ({docId, comments: allComments, datePosted, commentInput}) => {
 
@@ -17,7 +18,7 @@ const Comments = ({docId, comments: allComments, datePosted, commentInput}) => {
             <div className="p-4 pt-1 pb-4">
                 {comments.length >= 3 && (
                     <p className="text-sm text-gray-500 mb-1 cursor-pointer">
-                        View all {comments.length} comments
+                        View all comments
                     </p>
                 )}
                 {comments.slice(0,3).map((item) => (
@@ -32,6 +33,12 @@ const Comments = ({docId, comments: allComments, datePosted, commentInput}) => {
                     {formatDistance(datePosted.seconds, Math.floor(Date.now() / 1000))} ago
                 </p>
             </div>
+            <AddComment 
+                docId={docId}
+                comments={comments}
+                setComments={setComments}
+                commentInput={commentInput}
+            />
         </>
     )
 };

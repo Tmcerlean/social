@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import Header from '../components/Header';
 
 const NotFound = () => {
 
@@ -8,7 +9,12 @@ const NotFound = () => {
 
     return (
         <div>
-            Not Found
+            <Header />
+            <div className="w-full mx-auto max-w-screen-lg">
+                <p className="text-center text-2xl mt-16">
+                    Not Found!
+                </p>
+            </div>
         </div>
     )
 }

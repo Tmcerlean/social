@@ -34,9 +34,6 @@ const getSuggestedProfiles = async (id, following) => {
 }
 
 const updateLoggedInUsersFollowing = async (loggedInUserDocId, profileId, isFollowingProfile) => {
-
-    // Add the profileId to the following array of user with id
-
     return firebase.firestore().collection("users").doc(loggedInUserDocId).update({
         following: isFollowingProfile
             ? firebase.firestore.FieldValue.arrayRemove(profileId)
@@ -45,9 +42,9 @@ const updateLoggedInUsersFollowing = async (loggedInUserDocId, profileId, isFoll
 }
 
 const updateTargetUserFollowers = async (profileDocId, loggedInUserDocId, isFollowingProfile) => {
-
-    // Add the profileId to the following array of user with id
-
+    console.log(profileDocId)
+    console.log(loggedInUserDocId)
+    console.log(isFollowingProfile)
     return firebase.firestore().collection("users").doc(profileDocId).update({
         followers: isFollowingProfile
             ? firebase.firestore.FieldValue.arrayRemove(loggedInUserDocId)
@@ -62,8 +59,6 @@ const getUsersPhotos = async (uid, following) => {
         ...photo.data(),
         docId: photo.id
     }));
-
-    console.log(userFollowedPhotos);
 
     const photosWithUserDetails = await Promise.all(
         userFollowedPhotos.map(async (photo) => {
@@ -80,5 +75,43 @@ const getUsersPhotos = async (uid, following) => {
     return photosWithUserDetails;
 }
 
-export { checkUsernameDuplicate, getUserByUserId, getSuggestedProfiles, updateLoggedInUsersFollowing, updateTargetUserFollowers, getUsersPhotos };
+const getUserByUsername = async (username) => {
+    const result = await firebase.firestore().collection("users").where("username", "==", username).get();
+    const user = result.docs.map((item) => ({
+        ...item.data(),
+        docId: item.id
+    }));
 
+    return user;
+}
+
+const getUserPhotosByUsername = async (username) => {
+
+    const [user] = await getUserByUsername(username);
+    const result = await firebase.firestore().collection("photos").where("userId", "==", user.id).get();
+
+    const photos = result.docs.map((item) => ({
+        ...item.data(),
+        docId: item.id
+    }))
+
+    return photos;
+}
+
+const isUserFollowingProfile = async (loggedInUserUsername, profileUserId) => {
+    const result = await firebase.firestore().collection("users").where("username", "==", loggedInUserUsername).where("following", "array-contains", profileUserId).get();
+
+    const [response = {}] = result.docs.map((item) => ({
+        ...item.data(),
+        docId: item.id
+    }))
+
+    return response.id;
+}
+
+const toggleFollow = async (isFollowingProfile, activeUserDocId, profileDocId, profileUserId, followingUserId) => {
+    await updateLoggedInUsersFollowing(activeUserDocId, profileUserId, isFollowingProfile);
+    await updateTargetUserFollowers(profileDocId, followingUserId, isFollowingProfile);
+}
+
+export { checkUsernameDuplicate, getUserByUserId, getSuggestedProfiles, updateLoggedInUsersFollowing, updateTargetUserFollowers, getUsersPhotos, getUserByUsername, getUserPhotosByUsername, isUserFollowingProfile, toggleFollow };
