@@ -3,6 +3,7 @@ import FirebaseContext from '../context/firebase';
 import UserContext from '../context/user';
 import { Link } from 'react-router-dom';
 import * as ROUTES from '../constants/routes';
+import { DEFAULT_IMAGE_PATH } from '../constants/paths';
 
 const Header = () => {
 
@@ -10,32 +11,37 @@ const Header = () => {
     const { user } = useContext(UserContext);
 
     return (
-        <header className="w-full h-14 border-b flex items-center">
-            <div className="container mx-auto w-full">
-                <h1 className="text-3xl">
+        <header className="flex items-center align-items h-12 bg-gray-800 border-b mb-8">
+            <div className="container mx-auto w-full flex justify-between">
+                <h1 className="text-3xl text-white">
                     <Link to={ROUTES.HOME}>
                         Social.
                     </Link>
                 </h1>
-                <div className="">
+                <div className="text-white text-center flex items-center align-items">
                     {user ? (
                         <>
-                            <Link to={ROUTES.HOME}>
-                                <svg
-                                    className="w-8 mr-6 text-black-light cursor-pointer"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                    stroke="currentColor"
-                                >
-                                    <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth={2}
-                                    d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-                                    />
-                                </svg>
-                            </Link>
+                            <button
+                                type="button"
+                                title="Home"
+                            >
+                                <Link to={ROUTES.HOME}>
+                                    <svg
+                                        className="w-6 mr-6 text-white cursor-pointer"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                    >
+                                        <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                                        />
+                                    </svg>
+                                </Link>
+                            </button>
 
                             <button
                                 type="button"
@@ -48,7 +54,7 @@ const Header = () => {
                                 }}
                             >
                                 <svg
-                                    className="w-8 mr-6 text-black-light cursor-pointer"
+                                    className="w-6 mr-6 text-white cursor-pointer"
                                     xmlns="http://www.w3.org/2000/svg"
                                     fill="none"
                                     viewBox="0 0 24 24"
@@ -66,11 +72,11 @@ const Header = () => {
                                 <div className="flex items-center cursor-pointer">
                                     <Link to={`/p/${user?.displayName}`}>
                                         <img
-                                            className="rounded-full h-8 w-8 flex"
-                                            src= "/images/avatars/tom-avatar.jpg"
+                                            className="rounded-full h-7 w-7 flex"
+                                            src= {`../images/avatars/${user?.displayName}.jpg`}
                                             alt={`${user?.displayName} profile`}
                                             onError={(e) => {
-                                            e.target.src = "../../public/images/avatars/tom-avatar.jpg";
+                                            e.target.src = DEFAULT_IMAGE_PATH;
                                             }}
                                         />
                                     </Link>

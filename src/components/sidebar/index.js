@@ -9,7 +9,7 @@ const Sidebar = () => {
     } } = useUser();
 
     return (
-        <div>
+        <div className="mt-4">
             <User name={name} username={username} />
             <Suggestions id={id} following={following} loggedInUserDocId={docId} />
         </div>

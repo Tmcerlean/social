@@ -1,7 +1,7 @@
 import { useEffect, useReducer } from 'react';
 import PropTypes from 'prop-types';
 import Header from './Header';
-import { getUserByUsername, getUserPhotosByUsername } from '../../services/firebase';
+import { getUserPhotosByUsername } from '../../services/firebase';
 import Photos from './Photos';
 
 const Profile = ({ user }) => {
@@ -23,7 +23,7 @@ const Profile = ({ user }) => {
         if (user.username) {
             getProfileInformationAndPhotos();
         }
-    }, [user.username])
+    }, [user])
 
     return (
         <>

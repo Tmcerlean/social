@@ -13,7 +13,7 @@ const AddComment = ({ docId, comments, setComments, commentInput }) => {
     const handleSubmitComment = (e) => {
         e.preventDefault();
 
-        setComments([{displayName, comment}, ...comments]);
+        setComments([...comments, {displayName, comment}]);
         setComment('');
 
         return firebase.firestore().collection("photos").doc(docId).update({
@@ -22,7 +22,7 @@ const AddComment = ({ docId, comments, setComments, commentInput }) => {
     }
 
     return (
-        <div className="border-t border-gray-500">
+        <div className="border-t border-gray-200 p-4">
             <form
                 className="flex justify-between pl-0 pr-5"
                 method="POST"
@@ -30,7 +30,7 @@ const AddComment = ({ docId, comments, setComments, commentInput }) => {
             >
                 <input
                     autocomplete="off"
-                    className="text-sm text-gray-500 w-full mr-3 px-4"
+                    className="text-sm text-gray-500 w-full mr-3 px-4 outline-none"
                     type="text"
                     name="add-comment"
                     placeholder="Add a comment ..."

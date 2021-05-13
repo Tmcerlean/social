@@ -1,10 +1,9 @@
-import { lazy, Suspense, useContext } from 'react';
+import { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import * as ROUTES from './constants/routes';
 import UserContext from './context/user';
 import useAuthListener from './hooks/useAuthListener';
 import ProtectedRoute from './helpers/protected-route';
-import IsUserLoggedIn from './helpers/is-user-logged-in';
 
 const Home = lazy(() => import('./screens/Home'));
 const Login = lazy(() => import('./screens/Login'));
@@ -21,21 +20,13 @@ const App = () => {
       <Router>
         <Suspense fallback={<p>Loading ...</p>}>
           <Switch>
-            <IsUserLoggedIn user={user} loggedInPath={ROUTES.HOME} path={ROUTES.LOGIN}>
-              <Login />
-            </IsUserLoggedIn>
-            <IsUserLoggedIn user={user} loggedInPath={ROUTES.HOME} path={ROUTES.SIGNUP}>
-              <Signup />
-            </IsUserLoggedIn>
-            <Route path={ROUTES.PROFILE}>
-              <Profile />
-            </Route>
+            <Route path={ROUTES.LOGIN} component={Login} />
+            <Route path={ROUTES.SIGNUP} component={Signup} />
+            <Route path={ROUTES.PROFILE} component={Profile} />
             <ProtectedRoute user={user} path={ROUTES.HOME} exact>
-                <Home />
+              <Home />
             </ProtectedRoute>
-            <Route>
-              <NotFound />
-            </Route>
+            <Route component={NotFound} />
           </Switch>
         </Suspense>
       </Router>

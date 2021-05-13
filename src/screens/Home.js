@@ -2,15 +2,19 @@ import { useEffect } from 'react';
 import Header from '../components/Header';
 import Sidebar from '../components/sidebar/index';
 import Feed from '../components/Feed';
+import useUser from '../hooks/useUser';
+import LoggedInUserContext from '../context/logged-in-user';
 
-const Home = () => {
+const Home = ({ user: loggedInUser }) => {
+
+    const { user, setActiveUser } = useUser(loggedInUser.uid);
 
     useEffect(() => {
         document.title = 'Social';
     }, []);
 
     return (
-        <>
+        <LoggedInUserContext.Provider value={{ user, setActiveUser }}>
             <div className="">
                 <Header />
             </div>
@@ -18,7 +22,7 @@ const Home = () => {
                 <Feed />
                 <Sidebar />
             </div>
-        </>
+        </LoggedInUserContext.Provider>
     )
 }
 

@@ -11,7 +11,6 @@ const Suggestions = ({ id, following, loggedInUserDocId }) => {
     useEffect(() => {
         async function suggestedProfiles() {
             const response = await getSuggestedProfiles(id, following);
-            console.log(response)
             setProfiles(response);
         }
         if (id) {

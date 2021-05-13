@@ -6,17 +6,17 @@ import useUser from '../../hooks/useUser';
 import { isUserFollowingProfile, toggleFollow } from '../../services/firebase';
 
 
-const Header = ({ photosCount, profile: {
-    docId: profileDocId, id: profileUserId, name, followers = [], following = [], username: profileUsername
-}, followerCount, setFollowerCount }) => {
+const Header = ({ profile: {
+        docId: profileDocId, 
+        id: profileUserId, 
+        name, 
+        followers = [], 
+        following = [], 
+        username: profileUsername
+    }, followerCount, photosCount, setFollowerCount }) => {
     const { user } = useUser();
     const [isFollowingProfile, setIsFollowingProfile] = useState(null);
     const activeBtnFollow = user?.username && user?.username !== profileUsername;
-
-    //TEST
-    useEffect(() => {
-        console.log(isFollowingProfile)
-    }, [isFollowingProfile])
     
     const handleToggleFollow = async () => {
         setIsFollowingProfile((isFollowingProfile) => !isFollowingProfile);
@@ -41,8 +41,8 @@ const Header = ({ photosCount, profile: {
         <div className="grid grid-cols-3 gap-4 justify-between mx-auto max-w-screen-lg">
             <div className="container flex justify-center">
                 {user.username && (<img
-                    className="flex rounded-full h-40 w-40"
-                    src="/images/avatars/tom-avatar.jpg"
+                    className="flex rounded-full h-40 w-40 object-cover"
+                    src={`../images/avatars/${profileUsername}.jpg`}
                     alt={`${profileUsername} profile picture`}
                 />
                 )}
@@ -72,7 +72,7 @@ const Header = ({ photosCount, profile: {
                                 <p className="mr-10">
                                     <span className="font-bold">{photosCount}</span>
                                     {` `}
-                                    photos
+                                    posts
                                 </p>
                                 <p className="mr-10">
                                     <span className="font-bold">{followerCount}</span>
@@ -80,7 +80,7 @@ const Header = ({ photosCount, profile: {
                                     {followerCount === 1 ? `follower` : `followers`}
                                 </p>
                                 <p className="mr-10">
-                                    <span className="font-bold">{followers.length}</span>
+                                    <span className="font-bold">{following?.length}</span>
                                     {` `}
                                     following
                                 </p>

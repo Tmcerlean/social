@@ -6,6 +6,9 @@ import { updateLoggedInUsersFollowing, updateTargetUserFollowers } from '../../s
 const SuggestedProfile = ({profileDocId, username, profileId, id, loggedInUserDocId}) => {
 
     const [followed, setFollowed] = useState(false);
+    const [hovered, setHovered] = useState(false);
+
+    const toggleHover = () => setHovered(!hovered);
 
     async function handleFollowUser() {
         setFollowed(true);
@@ -20,13 +23,21 @@ const SuggestedProfile = ({profileDocId, username, profileId, id, loggedInUserDo
         !followed ? (
             <div className="flex flex-row items-center align-items justify-between">
                 <div className="flex items-center justify-between">
-                    <img
-                        className="flex rounded-full w-8 mr-3"
-                        src="./images/avatars/tom-avatar.jpg"
-                        alt=""
-                    />
                     <Link to={`/p/${username}`}>
-                        <p className="font-bold text-sm">{username}</p>
+                        <img
+                            className="flex rounded-full w-8 mr-3"
+                            src={`./images/avatars/${username}.jpg`}
+                            alt=""
+                        />
+                    </Link>
+                    <Link to={`/p/${username}`}>
+                        <p 
+                            className={`font-bold text-sm ${hovered ? 'underline' : ''}`}
+                            onMouseEnter={toggleHover}
+                            onMouseLeave={toggleHover}
+                        > 
+                            {username}
+                        </p>
                     </Link>
                 </div>
                 <button

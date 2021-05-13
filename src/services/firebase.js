@@ -27,8 +27,6 @@ const getSuggestedProfiles = async (id, following) => {
         return result.docs.map((user) => ({
         ...user.data(), docId: user.id
     })).filter((profile) => {
-        console.log(profile.id);
-        console.log(following)
         return profile.id !== id && !following.includes(profile.id)
     });
 }
@@ -42,9 +40,6 @@ const updateLoggedInUsersFollowing = async (loggedInUserDocId, profileId, isFoll
 }
 
 const updateTargetUserFollowers = async (profileDocId, loggedInUserDocId, isFollowingProfile) => {
-    console.log(profileDocId)
-    console.log(loggedInUserDocId)
-    console.log(isFollowingProfile)
     return firebase.firestore().collection("users").doc(profileDocId).update({
         followers: isFollowingProfile
             ? firebase.firestore.FieldValue.arrayRemove(loggedInUserDocId)

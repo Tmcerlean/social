@@ -13,16 +13,22 @@ const Post = ({ content }) => {
     const handleFocus = () => commentInput.current.focus();
 
     return (
-        <div className="rounded col-span-4 border bg-white border-gray-500 mb-12">
+        <div className="rounded col-span-4 border bg-white border-gray-300 mb-12">
             <Header username={content.username} />
-            <Image src={content.imageSrc} description={content.description} />
+            <Image 
+                src={content.imageSrc} 
+                description={content.description} 
+            />
             <Actions 
                 docId={content.docId}
                 totalLikes={content.likes.length}
                 likedPhoto={content.userLikedPhoto}
                 handleFocus={handleFocus}
             />
-            <Footer username={content.username} description={content.description} />
+            <Footer 
+                username={content.username} 
+                description={content.description} 
+            />
             <Comments 
                 docId={content.docId}
                 comments={content.comments}

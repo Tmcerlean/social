@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { formatDistance } from 'date-fns';
 import { Link } from 'react-router-dom'; 
@@ -7,11 +7,6 @@ import AddComment from './AddComment';
 const Comments = ({docId, comments: allComments, datePosted, commentInput}) => {
 
     const [comments, setComments] = useState(allComments);
-
-    useEffect(() => {
-        console.log(datePosted.seconds);
-        console.log(Math.floor(Date.now() / 1000));
-    }, [])
 
     return (
         <>

@@ -1,9 +1,12 @@
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom'; 
 
 const Footer = ({ username, description }) => {
     return (
         <div className="p-4 pt-2 pb-0">
-            <span className="mr-1 font-bold">{username}</span>
+            <Link to={`/p/${username}`}>
+                <span className="mr-1 font-bold cursor-pointer">{username}</span>
+            </Link>
             <span>{description}</span>
         </div>
     )
