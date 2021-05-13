@@ -2,6 +2,8 @@
 An Instagram inspired, desktop social media application.
 - [Live demo.](https://social-2dcd8.web.app/)
 
+![](Demo.gif)
+
 ## Features
 - Photo sharing application.
 - Firebase user authentication.
