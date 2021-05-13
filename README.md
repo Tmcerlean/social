@@ -1,3 +1,52 @@
+# Social
+An Instagram inspired, desktop social media application.
+- [Live demo.](https://social-2dcd8.web.app/)
+
+## Features
+- Photo sharing application.
+- Firebase user authentication.
+- Firebase Firestore database.
+
+## Pages
+- Home
+- Sign Up
+- Login
+- Profile 
+- Not Found
+
+## Built With
+- React
+- React Router
+- React Firebase Hooks
+- Styled Components
+- Firebase Auth
+- Firebase Firestore
+- Firebase Hosting
+- Tailwind CSS
+
+## Future Improvements
+- Add responsive design for mobile devices.
+- Add capacity to view individual posts outside of main feed.
+- Add user messaging.
+- Add comment replying.
+- Add comment liking.
+
+## Getting Started
+- Clone this project: git clone https://github.com/Tmcerlean/social.git
+- Install the required dependencies by using: npm install
+- A live demo of the project can be started by using: npm start
+- Distribution files can be produced using: npm run build
+
+## Acknowledgements
+- Design inspired by [Instagram](https://www.instagram.com/)
+
+## License
+- [MIT License](https://opensource.org/licenses/MIT)
+
+
+####################################################
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
